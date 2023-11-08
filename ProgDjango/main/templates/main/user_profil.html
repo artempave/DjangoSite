@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль пользователя</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-image: url('https://get.wallhere.com/photo/selective-coloring-anime-girls-anime-monochrome-cartoon-gesture-black-hair-flash-photography-ART-long-hair-cg-artwork-audio-equipment-hime-cut-carmine-event-drawing-fictional-character-Animated-cartoon-action-figure-illustration-darkness-graphics-fiction-animation-2025771.jpg');
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+        }
+
+        .profile-header {
+            #background-color: #007bff;
+            color: #fff;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-top: 20px;
+        }
+
+        .user-info {
+            margin-bottom: 20px;
+        }
+
+        .about-me {
+            margin: 20px 0;
+            font-size: 16px;
+            color: #777;
+        }
+
+        .upload-form {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 300px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+        }
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .navbar-brand,
+        .navbar-nav .nav-link {
+            color: #fff;
+            transition: background-color 0.3s;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .settings-icon {
+            font-size: 32px;
+            color: #fff;
+            margin-left: 15px;
+            cursor: pointer;
+            transition: font-size 0.3s;
+        }
+
+        .settings-icon:hover {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .card {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">MeatBeat</a>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">Главная</a>
+                </li>
+
+                {% if request.session.username %}
+                <li class="nav-item">
+                    <a class="nav-link">Профиль</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'user_list' %}">Друзья</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">{{ request.session.username }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Авторизироваться</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a href="{% url 'setting' %}">  <i class="fas fa-cog settings-icon" ></i></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="profile-header">
+        <h1>{{ user.username }}</h1>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 offset-md-4 text-center">
+                <div class="user-info">
+                    <img class="profile-photo img-fluid" src="https://via.placeholder.com/150" alt="Фото профиля">
+                    <div class="about-me">
+                        <p>Немного о себе, ваше описание здесь.</p>
+                    </div>
+                </div>
+
+                <div class="upload-form">
+                    <h2>Загрузить контент</h2>
+                    <form enctype="multipart/form-data" action="/upload" method="post">
+                        <div class="mb-3">
+                            <label for="content-type" class="form-label">Выберите тип контента:</label>
+                            <select id="content-type" name="content-type" class="form-select">
+                                <option value="photo">Фото</option>
+                                <option value="video">Видео</option>
+                                <option value="audio">Музыка</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="file" class="form-label">Выберите файл:</label>
+                            <input type="file" id="file" name="file" class="form-control" accept="image/*, video/*, audio/*">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Загрузить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+
+</html>
