@@ -151,9 +151,9 @@
                         <h5 class="card-title text-white text-center">{{ article.title }}</h5>
                         <p class="card-text text-white text-decor">{{ article.anons }}</p>
                         <p class="card-text text-white">{{ article.text }}</p>
-
-<!--                        <img src="{{ article.picture.url }}" class="img-fluid">-->
-
+                                {% if article.extension in article.image_extensions %}
+                        <img src="{{ article.picture.url }}" class="img-fluid">
+                                {% else %}
 
 
                         <video
@@ -168,8 +168,7 @@
   >
     <source src={{ article.picture.url }} type="video/mp4" />
     <source src={{ article.picture.url }} type="video/webm" />
-                            <source src={{ article.picture.url }} type="image/jpg" />
-                            <source src={{ article.picture.url }} type="image/png" />
+
     <p class="vjs-no-js">
       To view this video please enable JavaScript, and consider upgrading to a
       web browser that
@@ -180,7 +179,7 @@
   </video>
 
   <script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>
-
+                        {% endif %}
                         <p class="card-text text-white text-decor-top">{{ article.time }}</p>
                     </div>
                 </div>
